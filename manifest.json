@@ -1,0 +1,22 @@
+{
+  "name": "RIO Coffee Bonus",
+  "short_name": "RIO Bonus",
+  "description": "RIO Coffee — bonus ve sadakat uygulaması",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#0f0b07",
+  "theme_color": "#c8a45d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "img/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

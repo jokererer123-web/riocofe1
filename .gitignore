@@ -1,0 +1,14 @@
+# Güvenlik - şifre hash'i burada tutulur, repoya YÜKLEMEYİN
+config.json
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Yerel veritabanı dosyası - varsayılan veriyi korumak istiyorsanız data.json'u tutabilirsiniz,
+# ancak canlı kullanıcı verileri (rezervasyonlar, yorumlar) sunucuda oluşur.
+# data.json
+
+# İşletim sistemi
+.DS_Store
+Thumbs.db

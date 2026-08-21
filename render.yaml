@@ -1,0 +1,11 @@
+# Render.com deploy yapılandırması
+# Bu dosya, Render'da "Blueprint" ile deploy etmeyi kolaylaştırır.
+# Kullanım: Render'da New -> Blueprint -> bu repoyu bağla
+services:
+  - type: web
+    name: rio-coffee
+    env: node
+    plan: free
+    buildCommand: ""
+    startCommand: node server.js
+    healthCheckPath: /

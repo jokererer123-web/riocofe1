@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#c8a45d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>RIO Bonus</title>
+<style>
+  :root{--bg:#0f0b07;--bg2:#171009;--bg3:#1e150d;--line:rgba(200,164,93,.22);--gold:#c8a45d;--gold2:#e0c184;--cream:#f5ecdd;--muted:#a08b70;--faint:#6f5d45;--red:#e0605f;--green:#5fbf9f}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;line-height:1.6}
+  a{color:var(--gold)}
+  button{font-family:inherit;cursor:pointer}
+  .wrap{max-width:480px;margin:0 auto;padding:20px}
+
+  header{text-align:center;padding:28px 20px 16px}
+  header img{width:64px;height:64px;object-fit:cover;border-radius:14px;margin-bottom:8px}
+  header h1{font-size:26px;color:var(--cream)}
+  header h1 span{color:var(--gold);font-style:italic}
+  header p{color:var(--muted);font-size:13px}
+  .lang{display:inline-flex;gap:4px;border:1px solid var(--line);border-radius:30px;padding:3px;margin-top:12px}
+  .lang button{border:none;background:transparent;color:var(--muted);font-weight:700;font-size:12px;padding:5px 16px;border-radius:30px}
+  .lang button.active{background:var(--gold);color:#171009}
+
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:16px}
+  .card h2{font-size:18px;margin-bottom:14px;color:var(--gold2)}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:5px}
+  .field input{width:100%;background:var(--bg);border:1px solid var(--line);padding:12px 14px;color:var(--cream);font-size:15px;outline:none;border-radius:8px}
+  .field input:focus{border-color:var(--gold)}
+  .btn{width:100%;padding:13px;background:var(--gold);color:#171009;border:none;font-weight:800;font-size:14px;border-radius:8px;margin-top:6px}
+  .btn:hover{background:var(--gold2)}
+  .btn.ghost{background:var(--bg3);color:var(--gold);border:1px solid var(--line)}
+  .err{color:var(--red);font-size:13px;min-height:16px;margin-top:8px}
+  .switch{margin-top:14px;font-size:13px;color:var(--muted);text-align:center}
+  .switch a{color:var(--gold);font-weight:700;cursor:pointer}
+
+  /* puan ekranı */
+  .points-box{text-align:center;padding:24px}
+  .points-box .num{font-family:Georgia,serif;font-size:56px;color:var(--gold);line-height:1}
+  .points-box .lbl{color:var(--muted);font-size:13px;margin-top:4px}
+  .qr-box{text-align:center;background:#fff;border-radius:12px;padding:16px;margin-top:16px}
+  .qr-box img{width:220px;height:220px;display:block;margin:0 auto}
+  .qr-box .qrcode{font-family:monospace;color:#333;font-size:13px;margin-top:10px;letter-spacing:1px}
+  .reward{display:flex;justify-content:space-between;align-items:center;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:10px}
+  .reward b{color:var(--cream)}
+  .reward span{color:var(--gold2);font-weight:700}
+  .reward button{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:7px 14px;border-radius:8px;font-weight:700;font-size:12px}
+  .reward button:disabled{opacity:.4;cursor:not-allowed}
+  .history{margin-top:10px;max-height:200px;overflow:auto}
+  .history div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(200,164,93,.1);font-size:13px;color:var(--muted)}
+  .history div b{color:var(--cream)}
+  .hidden{display:none}
+  .off{text-align:center;padding:40px 20px;color:var(--muted)}
+  .off h2{color:var(--gold);margin-bottom:10px}
+  .logrow{display:flex;gap:10px;align-items:center}
+  .logrow input{flex:1}
+</style>
+</head>
+<body class="lang-ky">
+
+<header>
+  <img src="img/logo.png" alt="RIO">
+  <h1>RIO <span>Bonus</span></h1>
+  <p data-ky>Сыйлык системасы</p><p data-ru>Бонусная система</p>
+  <div class="lang">
+    <button id="btnKy" class="active" onclick="setLang('ky')">KG</button>
+    <button id="btnRu" onclick="setLang('ru')">RU</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- Kapalı uyarısı -->
+  <div class="card off" id="offCard">
+    <h2 data-ky>Жакында</h2><h2 data-ru>Скоро</h2>
+    <p data-ky>Бонус системасы азырынча иштей элек.</p><p data-ru>Бонусная система пока недоступна.</p>
+  </div>
+
+  <!-- Giriş -->
+  <div class="card" id="authCard">
+    <h2 data-ky>Кирүү</h2><h2 data-ru>Вход</h2>
+    <div class="field"><label data-ky>Атыңыз / Телефон</label><label data-ru>Имя / Телефон</label><input id="aName"></div>
+    <div class="field"><label data-ky>Сырсөз</label><label data-ru>Пароль</label><input id="aPass" type="password"></div>
+    <div class="err" id="aErr"></div>
+    <button class="btn" onclick="doLogin()" data-ky>Кирүү</button><button class="btn" onclick="doLogin()" data-ru>Войти</button>
+    <div class="switch"><span data-ky>Аккаунт жокпу?</span><span data-ru>Нет аккаунта?</span> <a onclick="showReg(true)" data-ky>Катталуу</a><a onclick="showReg(true)" data-ru>Регистрация</a></div>
+  </div>
+
+  <!-- Kayıt -->
+  <div class="card hidden" id="regCard">
+    <h2 data-ky>Катталуу</h2><h2 data-ru>Регистрация</h2>
+    <div class="field"><label data-ky>Атыңыз</label><label data-ru>Имя</label><input id="rName"></div>
+    <div class="field"><label data-ky>Телефон</label><label data-ru>Телефон</label><input id="rPhone" placeholder="+996..."></div>
+    <div class="field"><label data-ky>Сырсөз</label><label data-ru>Пароль</label><input id="rPass" type="password"></div>
+    <div class="err" id="rErr"></div>
+    <button class="btn" onclick="doRegister()" data-ky>Түзүү</button><button class="btn" onclick="doRegister()" data-ru>Создать</button>
+    <div class="switch"><span data-ky>Аккаунтуңуз барбы?</span><span data-ru>Есть аккаунт?</span> <a onclick="showReg(false)" data-ky>Кирүү</a><a onclick="showReg(false)" data-ru>Войти</a></div>
+  </div>
+
+  <!-- Bonus panel -->
+  <div class="card hidden" id="panelCard">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h2 id="welcome" style="font-size:22px;color:var(--gold2)">👋</h2>
+      <button class="btn ghost" style="width:auto;padding:8px 14px" onclick="doLogout()" data-ky>Чыгуу</button><button class="btn ghost" style="width:auto;padding:8px 14px" onclick="doLogout()" data-ru>Выйти</button>
+    </div>
+    <div class="points-box">
+      <div class="num" id="pointsNum">0</div>
+      <div class="lbl" data-ky>балл</div><div class="lbl" data-ru>баллов</div>
+    </div>
+
+    <div style="text-align:center;background:var(--bg3);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:14px">
+      <div style="color:var(--muted);font-size:12px" data-ky>Мүчө коду</div><div style="color:var(--muted);font-size:12px" data-ru>Код участника</div>
+      <div id="qrCode" style="font-family:monospace;font-size:22px;color:var(--gold2);letter-spacing:2px;margin-top:4px">-</div>
+      <img id="qrImg" alt="QR" style="width:170px;height:170px;margin:10px auto 0;display:none">
+      <div style="color:#888;font-size:11px;margin-top:8px" data-ky>Кассада QR кодду көрсөтүңүз</div><div style="color:#888;font-size:11px;margin-top:8px" data-ru>Покажите QR-код на кассе</div>
+    </div>
+
+    <h2 style="margin-top:20px" data-ky>Сыйлыктар</h2><h2 style="margin-top:20px" data-ru>Награды</h2>
+    <div class="reward"><div><b data-ky>Акысыз суусундук</b><b data-ru>Бесплатный напиток</b><br><span data-ky>100 балл</span><span data-ru>100 баллов</span></div><span id="freeState">-</span></div>
+    <div class="reward"><div><b data-ky>10% арзандатуу</b><b data-ru>Скидка 10%</b><br><span data-ky>50 балл</span><span data-ru>50 баллов</span></div><span id="discState">-</span></div>
+    <div style="margin-top:10px;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center">
+      <span data-ky>Акысыз суусундукка</span><span data-ru>До бесплатного напитка</span>: <b id="freeLeft" style="color:var(--gold)">-</b>
+      <div style="height:8px;background:var(--bg);border-radius:4px;margin-top:8px;overflow:hidden"><div id="freeBar" style="height:100%;background:var(--gold);width:0%"></div></div>
+    </div>
+
+    <h2 style="margin-top:20px" data-ky>Заказ тарыхы</h2><h2 style="margin-top:20px" data-ru>История заказов</h2>
+    <div class="history" id="orderHistory"></div>
+
+    <h2 style="margin-top:20px" data-ky>Балл тарыхы</h2><h2 style="margin-top:20px" data-ru>История баллов</h2>
+    <div class="history" id="history"></div>
+  </div>
+
+</div>
+
+<script>
+let TOKEN = localStorage.getItem('rio_bonus_token') || '';
+let CFG = null;
+function L(){ return document.body.classList.contains('lang-ru') ? 'ru' : 'ky'; }
+function setLang(l){ document.body.className='lang-'+l; document.getElementById('btnKy').classList.toggle('active',l==='ky'); document.getElementById('btnRu').classList.toggle('active',l==='ru'); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+const $=id=>document.getElementById(id);
+function showReg(on){ $('authCard').classList.toggle('hidden',on); $('regCard').classList.toggle('hidden',!on); }
+
+async function api(url,method='GET',body=null){
+  const o={method,headers:{}};
+  if(TOKEN) o.headers['Authorization']='Bearer '+TOKEN;
+  if(body){o.headers['Content-Type']='application/json';o.body=JSON.stringify(body);}
+  const r=await fetch(url,o); return {status:r.status,data:await r.json().catch(()=>({}))};
+}
+
+async function init(){
+  // bonus aktif mi?
+  const cfg=await api('/api/data');
+  CFG=(cfg.data.site&&cfg.data.site.bonus)||{};
+  if(!CFG.active){ $('offCard').classList.remove('hidden'); $('authCard').classList.add('hidden'); return; }
+  $('offCard').classList.add('hidden');
+  if(TOKEN){ const m=await api('/api/bonus/status'); if(m.status===200){ showPanel(m.data); } else { $('authCard').classList.remove('hidden'); } }
+  else { $('authCard').classList.remove('hidden'); }
+}
+
+async function doRegister(){
+  const name=$('rName').value.trim(), phone=$('rPhone').value.trim(), pass=$('rPass').value;
+  $('rErr').textContent='';
+  if(name.length<2){$('rErr').textContent=L()==='ru'?'Имя короче':'Ат кыска';return;}
+  if(pass.length<4){$('rErr').textContent=L()==='ru'?'Пароль мин 4':'Сырсөз мин 4';return;}
+  const r=await api('/api/register','POST',{name,phone,password:pass});
+  if(r.status===200){ TOKEN=r.data.token; localStorage.setItem('rio_bonus_token',TOKEN); const m=await api('/api/bonus/status'); showPanel(m.data); }
+  else $('rErr').textContent=r.data.error||'err';
+}
+async function doLogin(){
+  const name=$('aName').value.trim(), pass=$('aPass').value;
+  $('aErr').textContent='';
+  const r=await api('/api/login','POST',{name,password:pass});
+  if(r.status===200){ TOKEN=r.data.token; localStorage.setItem('rio_bonus_token',TOKEN); const m=await api('/api/bonus/status'); showPanel(m.data); }
+  else $('aErr').textContent=r.data.error||'err';
+}
+function doLogout(){ TOKEN=''; localStorage.removeItem('rio_bonus_token'); location.reload(); }
+
+function showPanel(d){
+  $('authCard').classList.add('hidden'); $('regCard').classList.add('hidden'); $('panelCard').classList.remove('hidden');
+  $('welcome').textContent='👋 '+(d.user&&d.user.name||'');
+  const pts=d.points||0;
+  $('pointsNum').textContent=pts;
+  $('qrCode').textContent=d.qr||'';
+  const qrImg=$('qrImg');
+  if(d.qr){ qrImg.src='https://api.qrserver.com/v1/create-qr-code/?size=170x170&data='+encodeURIComponent(d.qr); qrImg.style.display='block'; }
+  const cfg=d.config||CFG||{};
+  const freeCost=cfg.reward_free||100, discCost=cfg.reward_discount||50;
+  $('freeState').textContent= pts>=freeCost ? '✅' : '🔒';
+  $('discState').textContent= pts>=discCost ? '✅' : '🔒';
+  $('freeLeft').textContent= Math.max(0, freeCost-pts)+' балл';
+  $('freeBar').style.width= Math.min(100, pts/freeCost*100)+'%';
+  loadHistory();
+}
+async function loadHistory(){
+  try{
+    const m=await api('/api/bonus/status');
+    const uid=(m.data.user&&m.data.user.id)||'';
+    if(!uid){ $('history').innerHTML=''; $('orderHistory').innerHTML=''; return; }
+    const h=await api('/api/kasa/history?id='+uid);
+    const hist=(h.data&&h.data.history)||[];
+    $('history').innerHTML=hist.length? hist.slice().reverse().map(x=>`<div><span>${x.type==='add'?'+':'−'} ${x.points}</span><b>${esc(x.note||'')}</b><span>${new Date(x.at).toLocaleDateString()}</span></div>`).join('') : '<div style="text-align:center">—</div>';
+    // sipariş geçmişi
+    const o=await api('/api/kasa/orders?userId='+uid);
+    const orders=(o.data&&o.data.orders)||[];
+    $('orderHistory').innerHTML=orders.length? orders.slice(0,20).map(x=>`<div><span>${x.total} сом</span><b>${(x.items||[]).map(it=>esc(it.name)).join(', ')}</b><span>${new Date(x.at).toLocaleDateString()}</span></div>`).join('') : '<div style="text-align:center">—</div>';
+  }catch(e){ $('history').innerHTML=''; $('orderHistory').innerHTML=''; }
+}
+init();
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
