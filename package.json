@@ -1,0 +1,16 @@
+{
+  "name": "rio-coffee",
+  "version": "1.0.0",
+  "description": "RIO Coffee - kafe web sitesi + admin paneli (Node.js, JSON veri depolama)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "author": "RIO Coffee",
+  "license": "UNLICENSED",
+  "private": true
+}

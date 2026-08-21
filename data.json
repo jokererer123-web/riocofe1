@@ -1,0 +1,454 @@
+{
+  "announcement": {
+    "enabled": true,
+    "ru": "☕ Свежая обжарка каждое утро — сегодня в RIO!",
+    "ky": "☕ Ар бир таң жаңы куурулган кофе — бүгүн RIOдо!"
+  },
+  "products": [
+    {
+      "id": "p1",
+      "cat": "coffee",
+      "name_ru": "Эспрессо",
+      "name_ky": "Эспрессо",
+      "price": 120,
+      "desc_ru": "Насыщенная крема",
+      "desc_ky": "Канык крема"
+    },
+    {
+      "id": "p2",
+      "cat": "coffee",
+      "name_ru": "Американо",
+      "name_ky": "Американо",
+      "price": 150,
+      "desc_ru": "Мягкий кофе с водой",
+      "desc_ky": "Суу кошулган жумшак кофе"
+    },
+    {
+      "id": "p3",
+      "cat": "coffee",
+      "name_ru": "Латте",
+      "name_ky": "Латте",
+      "price": 190,
+      "desc_ru": "Нежный, с молоком",
+      "desc_ky": "Назик, сүт менен"
+    },
+    {
+      "id": "p4",
+      "cat": "coffee",
+      "name_ru": "Капучино",
+      "name_ky": "Капучино",
+      "price": 180,
+      "desc_ru": "Сбалансированный, с пеной",
+      "desc_ky": "Салмактуу, көбүктүү"
+    },
+    {
+      "id": "p5",
+      "cat": "coffee",
+      "name_ru": "Флэт уайт",
+      "name_ky": "Флэт уайт",
+      "price": 200,
+      "desc_ru": "Двойной эспрессо",
+      "desc_ky": "Эки эспрессо"
+    },
+    {
+      "id": "p6",
+      "cat": "coffee",
+      "name_ru": "Раф",
+      "name_ky": "Раф",
+      "price": 210,
+      "desc_ru": "Сливочный, ваниль",
+      "desc_ky": "Каймактуу, ваниль"
+    },
+    {
+      "id": "p7",
+      "cat": "coffee",
+      "name_ru": "Айс латте",
+      "name_ky": "Айс латте",
+      "price": 220,
+      "desc_ru": "Освежающий, со льдом",
+      "desc_ky": "Муз менен"
+    },
+    {
+      "id": "p8",
+      "cat": "bubble",
+      "name_ru": "Классический бабл ти",
+      "name_ky": "Классикалык бабл ти",
+      "price": 180,
+      "desc_ru": "Черный чай + молоко + тапиока",
+      "desc_ky": "Кара чай + сүт + тапиока"
+    },
+    {
+      "id": "p9",
+      "cat": "bubble",
+      "name_ru": "Манго бабл ти",
+      "name_ky": "Манго бабл ти",
+      "price": 200,
+      "desc_ru": "Сочный манго",
+      "desc_ky": "Ширелүү манго"
+    },
+    {
+      "id": "p10",
+      "cat": "bubble",
+      "name_ru": "Маракуйя бабл ти",
+      "name_ky": "Маракуйя бабл ти",
+      "price": 200,
+      "desc_ru": "Тропическая",
+      "desc_ky": "Тропикалык"
+    },
+    {
+      "id": "p11",
+      "cat": "bubble",
+      "name_ru": "Тайский бабл ти",
+      "name_ky": "Тай бабл ти",
+      "price": 210,
+      "desc_ru": "Ароматный тайский чай",
+      "desc_ky": "Жыпар жыттуу"
+    },
+    {
+      "id": "p12",
+      "cat": "bubble",
+      "name_ru": "Ягодный бабл ти",
+      "name_ky": "Мөмө бабл ти",
+      "price": 200,
+      "desc_ru": "Свежие ягоды",
+      "desc_ky": "Жаңы мөмөлөр"
+    },
+    {
+      "id": "p21",
+      "cat": "juice",
+      "name_ru": "Апельсиновый фреш",
+      "name_ky": "Апельсин фреш",
+      "price": 180,
+      "desc_ru": "Свежевыжатый",
+      "desc_ky": "Жаңы сыгылган"
+    },
+    {
+      "id": "p22",
+      "cat": "juice",
+      "name_ru": "Яблочный сок",
+      "name_ky": "Алма ширеси",
+      "price": 150,
+      "desc_ru": "Натуральный",
+      "desc_ky": "Табигый"
+    },
+    {
+      "id": "p23",
+      "cat": "limonade",
+      "name_ru": "Классическая лимонада",
+      "name_ky": "Классикалык лимонад",
+      "price": 160,
+      "desc_ru": "Лимон + мята",
+      "desc_ky": "Лимон + жалбыз"
+    },
+    {
+      "id": "p24",
+      "cat": "limonade",
+      "name_ru": "Ягодная лимонада",
+      "name_ky": "Мөмө лимонад",
+      "price": 180,
+      "desc_ru": "Свежие ягоды",
+      "desc_ky": "Жаңы мөмөлөр"
+    },
+    {
+      "id": "p25",
+      "cat": "milkshake",
+      "name_ru": "Клубничный милкшейк",
+      "name_ky": "Кулупкай милкшейк",
+      "price": 220,
+      "desc_ru": "Свежая клубника",
+      "desc_ky": "Жаңы кулупкай"
+    },
+    {
+      "id": "p26",
+      "cat": "milkshake",
+      "name_ru": "Шоколадный милкшейк",
+      "name_ky": "Шоколад милкшейк",
+      "price": 230,
+      "desc_ru": "Тающий шоколад",
+      "desc_ky": "Эриген шоколад"
+    },
+    {
+      "id": "p13",
+      "cat": "matcha",
+      "name_ru": "Матча латте",
+      "name_ky": "Матча латте",
+      "price": 220,
+      "desc_ru": "Японская матча",
+      "desc_ky": "Жапон матчасы"
+    },
+    {
+      "id": "p14",
+      "cat": "matcha",
+      "name_ru": "Ягодный матча",
+      "name_ky": "Мөмө матча",
+      "price": 230,
+      "desc_ru": "Матча + ягоды",
+      "desc_ky": "Матча + мөмө"
+    },
+    {
+      "id": "p15",
+      "cat": "matcha",
+      "name_ru": "Горячий шоколад",
+      "name_ky": "Ысык шоколад",
+      "price": 190,
+      "desc_ru": "Молочный шоколад",
+      "desc_ky": "Сүт шоколады"
+    },
+    {
+      "id": "p17",
+      "cat": "dessert",
+      "name_ru": "Чизкейк",
+      "name_ky": "Чизкейк",
+      "price": 200,
+      "desc_ru": "Нежный творожный",
+      "desc_ky": "Назик чизкейк"
+    },
+    {
+      "id": "p18",
+      "cat": "dessert",
+      "name_ru": "Морковный торт",
+      "name_ky": "Сабиз торту",
+      "price": 210,
+      "desc_ru": "С кремом",
+      "desc_ky": "Крем менен"
+    },
+    {
+      "id": "p19",
+      "cat": "dessert",
+      "name_ru": "Тирамису",
+      "name_ky": "Тирамису",
+      "price": 230,
+      "desc_ru": "Итальянский",
+      "desc_ky": "Италиялык"
+    },
+    {
+      "id": "p20",
+      "cat": "dessert",
+      "name_ru": "Круассан",
+      "name_ky": "Круассан",
+      "price": 150,
+      "desc_ru": "Свежий, слоеный",
+      "desc_ky": "Жаңы, катмарлуу"
+    },
+    {
+      "id": "p30",
+      "cat": "icetea",
+      "name_ru": "Айс ти лимон",
+      "name_ky": "Лимон айс ти",
+      "price": 160,
+      "desc_ru": "Освежающий айс ти",
+      "desc_ky": "Сергитүүчү айс ти"
+    },
+    {
+      "id": "p31",
+      "cat": "icetea",
+      "name_ru": "Айс ти персик",
+      "name_ky": "Шабдалы айс ти",
+      "price": 170,
+      "desc_ru": "Айс ти с персиком",
+      "desc_ky": "Шабдалы кошулган айс ти"
+    },
+    {
+      "id": "p32",
+      "cat": "djuzboll",
+      "name_ru": "Джузболл манго",
+      "name_ky": "Манго джузболл",
+      "price": 220,
+      "desc_ru": "Фруктовый шар с манго",
+      "desc_ky": "Манго менен мөмө шары"
+    },
+    {
+      "id": "p33",
+      "cat": "djuzboll",
+      "name_ru": "Джузболл клубника",
+      "name_ky": "Кулупкай джузболл",
+      "price": 220,
+      "desc_ru": "Шар с клубникой",
+      "desc_ky": "Кулупкай менен шар"
+    },
+    {
+      "id": "k40",
+      "cat": "kakao",
+      "name_ru": "Какао",
+      "name_ky": "Какао",
+      "price": 180,
+      "desc_ru": "Классический какао с молоком",
+      "desc_ky": "Сүт менен классикалык какао"
+    },
+    {
+      "id": "k41",
+      "cat": "kakao",
+      "name_ru": "Какао с маршмеллоу",
+      "name_ky": "Маршмеллоу менен какао",
+      "price": 210,
+      "desc_ru": "Какао с зефиром",
+      "desc_ky": "Зефир менен какао"
+    },
+    {
+      "id": "k42",
+      "cat": "kakao",
+      "name_ru": "Белый шоколад какао",
+      "name_ky": "Ак шоколад какао",
+      "price": 220,
+      "desc_ru": "Нежный белый шоколад",
+      "desc_ky": "Назик ак шоколад"
+    }
+  ],
+  "videos": [],
+  "gallery": [
+    {
+      "id": "gg6",
+      "src": "img/g6.jpg",
+      "label_ru": "Интерьер",
+      "label_ky": "Интерьер",
+      "label_en": "Interior",
+      "label_ar": "داخلي"
+    },
+    {
+      "id": "gg7",
+      "src": "img/g7.jpg",
+      "label_ru": "Уют",
+      "label_ky": "Ыңгайлуулук",
+      "label_en": "Cozy",
+      "label_ar": "مريح"
+    },
+    {
+      "id": "gg8",
+      "src": "img/g8.jpg",
+      "label_ru": "Барная стойка",
+      "label_ky": "Бар",
+      "label_en": "Bar counter",
+      "label_ar": "البار"
+    },
+    {
+      "id": "gg9",
+      "src": "img/g9.jpg",
+      "label_ru": "Моменты",
+      "label_ky": "Учурлар",
+      "label_en": "Moments",
+      "label_ar": "لحظات"
+    }
+  ],
+  "reservations": [],
+  "reviews": [
+    {
+      "id": "r1",
+      "stars": 5,
+      "author": "Айгерим",
+      "city_ru": "г. Каракол",
+      "city_ky": "Каракол ш.",
+      "text_ru": "Лучший бабл ти в Караколе! Манго — просто бомба, всегда свежая тапиока. Атмосфера очень уютная.",
+      "text_ky": "Караколдогу эң мыкты бабл ти! Манго — ажайып, тапиока дайыма жаңы. Атмосфера абдан ыңгайлуу."
+    },
+    {
+      "id": "r2",
+      "stars": 5,
+      "author": "Бакыт",
+      "city_ru": "местный",
+      "city_ky": "жергиликтүү",
+      "text_ru": "Кофе отличный, матча латте нежная и очень вкусная. Люблю это место за уют и хорошее настроение.",
+      "text_ky": "Кофе эң сонун, матча латте назик жана абдан даамдуу. Бул жайды ыңгайлуулугу үчүн жакшы көрөм."
+    },
+    {
+      "id": "r3",
+      "stars": 5,
+      "author": "София",
+      "city_ru": "туристка",
+      "city_ky": "турист",
+      "text_ru": "Отличное место, чтобы поработать или встретиться с друзьями. Интерьер красивый, персонал приветливый.",
+      "text_ky": "Иштөө же достор менен жолугушуу үчүн эң сонун жай. Интерьер кооз, кызматкерлер боорукер."
+    },
+    {
+      "id": "r4",
+      "stars": 5,
+      "author": "Дилназ",
+      "city_ru": "г. Каракол",
+      "city_ky": "Каракол ш.",
+      "text_ru": "Десерты восхитительные, особенно чизкейк. Раф — самый вкусный в городе!",
+      "text_ky": "Десерттер укмуш, өзгөчө чизкейк. Раф — шаардагы эң даамдуусу!"
+    }
+  ],
+  "site": {
+    "hero": {
+      "badge_ru": "Coffee · Bubble Tea · Matcha",
+      "badge_ky": "Coffee · Bubble Tea · Matcha",
+      "title1_ru": "Вкус, который",
+      "title2_ru": "невозможно не заметить",
+      "title1_ky": "Эсиңизден чыкпай",
+      "title2_ky": "турган даам",
+      "sub_ru": "Спешелти кофе, яркий бабл ти и нежная матча — ритуал идеального кофе-брейка в самом центре Каракола.",
+      "sub_ky": "Спешелти кофе, ачык бабл ти жана назик матча — Караколдун борборундагы идеалдуу кофе-брейк ритуалы.",
+      "badge_en": "Coffee · Bubble Tea · Matcha",
+      "badge_ar": "قهوة · بابل تي · ماتشا",
+      "title1_en": "A taste",
+      "title2_en": "you can't ignore",
+      "title1_ar": "طعم",
+      "title2_ar": "لا يمكن تجاهله",
+      "sub_en": "Specialty coffee, bright bubble tea and tender matcha — the ritual of the perfect coffee break in the heart of Karakol.",
+      "sub_ar": "قهوة متخصصة وبابل تي مشرق وماتشا ناعمة — طقوس استراحة القهوة المثالية في قلب قاراقول."
+    },
+    "hours": {
+      "week_ru": "Ежедневно",
+      "week_ky": "Күн сайын",
+      "week_en": "Daily",
+      "week_ar": "يومياً",
+      "week_hours": "07:00 – 23:00",
+      "weekend_ru": "Ежедневно",
+      "weekend_ky": "Күн сайын",
+      "weekend_en": "Daily",
+      "weekend_ar": "يومياً",
+      "weekend_hours": "07:00 – 23:00"
+    },
+    "socials": {
+      "instagram": "https://www.instagram.com/rio_coffee_karakol/",
+      "whatsapp": "",
+      "telegram": ""
+    },
+    "categories": {
+      "coffee_ru": "Кофе",
+      "coffee_ky": "Кофе",
+      "bubble_ru": "Бабл ти",
+      "bubble_ky": "Бабл ти",
+      "juice_ru": "Соки",
+      "juice_ky": "Ширелер",
+      "limonade_ru": "Лимонады",
+      "limonade_ky": "Лимонаддар",
+      "milkshake_ru": "Милкшейки",
+      "milkshake_ky": "Милкшейктер",
+      "matcha_ru": "Матча",
+      "matcha_ky": "Матча",
+      "dessert_ru": "Десерты",
+      "dessert_ky": "Десерттер",
+      "icetea_ru": "Айс ти",
+      "icetea_ky": "Айс ти",
+      "icetea_en": "Ice Tea",
+      "icetea_ar": "آيس تي",
+      "djuzboll_ru": "Джузболл",
+      "djuzboll_ky": "Джузболл",
+      "djuzboll_en": "Djuzboll",
+      "djuzboll_ar": "جوزبول",
+      "kakao_ru": "Какао",
+      "kakao_ky": "Какао",
+      "kakao_en": "Cocoa",
+      "kakao_ar": "كاكاو"
+    },
+    "contact": {
+      "address_ru": "г. Каракол, ул. Жусаева 127, кофейня Рио",
+      "address_ky": "Каракол ш., Жусаева көч. 127",
+      "address_en": "Karakol, Zhusaeva str. 127, Rio coffee",
+      "address_ar": "قاراقول، شارع جوساييفا 127، مقهى ريو",
+      "phone": "+996555696797",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Karakol+Zhusaeva+127+Rio+Coffee"
+    },
+    "bonus": {
+      "active": true,
+      "per_item": 10,
+      "reward_free": 100,
+      "reward_discount": 50,
+      "discount_percent": 10
+    }
+  },
+  "users": [],
+  "orders": [],
+  "staff": []
+}
