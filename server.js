@@ -793,7 +793,31 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Worker POS (GitHub Pages benzeri - Supabase bağlantılı)
+  if (url === '/worker' || url === '/worker/' || url === '/worker.html' || url === '/ky/worker' || url === '/ky/worker/' || url === '/ru/worker' || url === '/ru/worker/' || url === '/en/worker' || url === '/en/worker/' || url === '/tr/worker' || url === '/tr/worker/') {
+    const fp = path.join(ROOT, 'worker.html');
+    fs.readFile(fp, (err, buf) => {
+      if (err) return send(res, 404, { error: 'Not found' });
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': buf.length, 'Cache-Control': 'no-store' });
+      res.end(buf);
+    });
+    return;
+  }
+
   // Everything else -> static
+  // klasör ise index.html dene
+  if (url.endsWith('/')) {
+    const fp = path.join(ROOT, url, 'index.html');
+    if (fs.existsSync(fp)) {
+      fs.readFile(fp, (err, buf) => {
+        if (!err) {
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': buf.length, 'Cache-Control': 'no-store' });
+          res.end(buf);
+        } else serveStatic(req, res, url);
+      });
+      return;
+    }
+  }
   serveStatic(req, res, url);
 });
 

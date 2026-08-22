@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RIO Coffee · Жумушчу</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+// GitHub Pages base path fix
+(function(){
+  window.RIO_BASE = location.pathname.includes('/riocofe1/') ? '/riocofe1' : '';
+})();
+</script>
+<style>
+  :root{--bg:#0f0b07;--bg2:#171009;--bg3:#1e150d;--line:rgba(200,164,93,.22);--gold:#c8a45d;--gold2:#e0c184;--cream:#f5ecdd;--muted:#a08b70;--red:#e0605f;--green:#5fbf9f}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;line-height:1.6}
+  .top{position:sticky;top:0;z-index:10;background:rgba(15,11,7,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+  .brand{font-family:Georgia,serif;font-weight:700;font-size:20px;letter-spacing:1px}
+  .brand span{color:var(--gold)}
+  .badge{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);padding:4px 10px;border-radius:20px}
+  .wrap{max-width:640px;margin:0 auto;padding:18px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:16px}
+  .card h2{font-family:Georgia,serif;font-weight:400;font-size:22px;margin-bottom:6px;color:var(--cream)}
+  .card .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:5px}
+  .field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line);padding:12px 14px;color:var(--cream);font-size:14px;outline:none;border-radius:8px}
+  .field input:focus{border-color:var(--gold)}
+  .btn{width:100%;padding:12px;background:var(--gold);color:#171009;border:none;font-weight:800;font-size:14px;border-radius:8px;margin-top:8px;cursor:pointer;letter-spacing:.5px}
+  .btn:hover{background:var(--gold2)}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--gold)}
+  .btn.green{background:var(--green);color:#fff}
+  .btn.red{background:var(--red);color:#fff}
+  .btn.sm{width:auto;padding:7px 14px;font-size:13px}
+  .row{display:flex;gap:8px}
+  .row .btn{flex:1;margin-top:0}
+  .msg{font-size:13px;min-height:18px;margin-top:8px;text-align:center}
+  .msg.err{color:var(--red)} .msg.ok{color:var(--green)}
+  .hidden{display:none !important}
+  .lang{display:flex;gap:3px;border:1px solid var(--line);border-radius:30px;padding:3px}
+  .lang button{border:none;background:transparent;color:var(--muted);font-weight:700;font-size:11px;padding:5px 10px;border-radius:30px;cursor:pointer}
+  .lang button.active{background:var(--gold);color:#171009}
+  /* POS */
+  .staff-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--gold);padding:6px 12px;border-radius:20px;font-size:13px;font-weight:700;color:var(--gold2)}
+  .cats{display:flex;gap:6px;overflow-x:auto;margin:12px 0;padding-bottom:4px}
+  .cats::-webkit-scrollbar{display:none}
+  .cat{flex:0 0 auto;border:1px solid var(--line);background:var(--bg3);color:var(--muted);padding:7px 14px;border-radius:20px;font-weight:700;font-size:12px;cursor:pointer}
+  .cat.active{background:var(--gold);color:#171009;border-color:var(--gold)}
+  .prod{display:flex;justify-content:space-between;align-items:center;padding:10px 8px;border-bottom:1px solid rgba(200,164,93,.1);cursor:pointer}
+  .prod:hover{background:var(--bg3)}
+  .prod b{font-size:14px}
+  .prod span{color:var(--gold);font-weight:700;font-size:13px}
+  .cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(200,164,93,.2);font-size:14px}
+  .qty{display:flex;gap:6px;align-items:center}
+  .total{display:flex;justify-content:space-between;font-size:18px;font-weight:800;color:var(--gold2);padding-top:10px;margin-top:6px;border-top:2px solid var(--gold)}
+  .user-card{text-align:center;background:var(--bg3);border:1px solid var(--gold);border-radius:12px;padding:12px;margin:10px 0}
+  .user-card .pts{font-family:Georgia,serif;font-size:28px;color:var(--gold)}
+  .receipt{background:#fff;color:#111;font-family:'Courier New',monospace;font-size:12px;padding:12px;border-radius:6px;white-space:pre-wrap;max-width:320px;margin:12px auto}
+  .r-h{text-align:center;font-weight:800;font-size:14px}
+  .r-c{text-align:center;margin-bottom:6px}
+  .r-row{display:flex;justify-content:space-between}
+  .r-sep{border-top:1px dashed #999;margin:6px 0}
+  .r-total{font-weight:800;font-size:15px}
+  .divider{height:1px;background:var(--line);margin:14px 0}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="brand">RIO <span>· POS</span></div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <div class="lang">
+      <button onclick="setLang('ky')" id="lky" class="active">KG</button>
+      <button onclick="setLang('ru')" id="lru">RU</button>
+      <button onclick="setLang('en')" id="len">EN</button>
+      <button onclick="setLang('tr')" id="ltr">TR</button>
+    </div>
+    <div class="badge">WORKER</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1 style="font-family:Georgia,serif;font-size:32px;font-weight:400;margin:8px 0 4px">
+    <span data-ky>Жумушчу</span><span data-ru>Рабочий</span><span data-en>Worker</span><span data-tr>Çalışan</span>
+  </h1>
+  <div style="color:var(--muted);font-size:13px;margin-bottom:10px">⌁ RIO Coffee · Karakol</div>
+
+  <!-- 1. Supabase Bağlantı -->
+  <div class="card" id="connCard">
+    <h2 data-ky>Rio базасын туташтыруу</h2><h2 data-ru>Подключение базы Rio</h2><h2 data-en>Connect Rio Database</h2><h2 data-tr>Rio Veritabanını Bağla</h2>
+    <div class="sub" data-ky>Бул түзмөктө бир жолу Supabase → Project Settings → API бөлүмүндөгү Project URL жана ачык Publishable/anon key киргизиңиз. Жашыруун service_role ачкычын колдонбоңуз.</div>
+    <div class="sub" data-ru>На этом устройстве один раз введите Project URL и публичный Publishable/anon key из Supabase → Project Settings → API. Не используйте секретный service_role ключ.</div>
+    <div class="sub" data-en>On this device, enter once the Project URL and public Publishable/anon key from Supabase → Project Settings → API. Do not use the secret service_role key.</div>
+    <div class="sub" data-tr>Bu cihazda bir kez Supabase → Project Settings → API bölümündeki Project URL ve açık Publishable/anon key girin. Gizli service_role anahtarını kullanmayın.</div>
+
+    <div class="field">
+      <label>Project URL</label>
+      <input id="sbUrl" placeholder="https://xxxx.supabase.co">
+    </div>
+    <div class="field">
+      <label>Publishable / anon key</label>
+      <input id="sbKey" placeholder="eyJhbGciOi...">
+    </div>
+    <button class="btn" onclick="saveConn()" data-ky>Коопсуз туташууну сактоо</button>
+    <button class="btn" onclick="saveConn()" data-ru>Сохранить безопасное подключение</button>
+    <button class="btn" onclick="saveConn()" data-en>Save Secure Connection</button>
+    <button class="btn" onclick="saveConn()" data-tr>Güvenli Bağlantıyı Kaydet</button>
+    <div class="msg" id="connMsg"></div>
+
+    <div class="divider"></div>
+    <div style="font-size:12px;color:var(--muted)">
+      <span data-ky>Сакталган маалымат бул браузерде гана калат (localStorage).</span>
+      <span data-ru>Данные хранятся только в этом браузере (localStorage).</span>
+      <span data-en>Data stays only in this browser (localStorage).</span>
+      <span data-tr>Veriler sadece bu tarayıcıda kalır (localStorage).</span>
+    </div>
+    <button class="btn ghost" style="margin-top:10px" onclick="clearConn()" data-ky>Туташууну тазалоо</button>
+    <button class="btn ghost" style="margin-top:10px" onclick="clearConn()" data-ru>Очистить подключение</button>
+    <button class="btn ghost" style="margin-top:10px" onclick="clearConn()" data-en>Clear Connection</button>
+    <button class="btn ghost" style="margin-top:10px" onclick="clearConn()" data-tr>Bağlantıyı Temizle</button>
+  </div>
+
+  <!-- 2. POS Panel (bağlantıdan sonra) -->
+  <div class="card hidden" id="posCard">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="staff-badge" id="staffBadge">👤 <span id="staffName">—</span></div>
+      <button class="btn ghost sm" onclick="logoutStaff()">✕</button>
+    </div>
+
+    <!-- Staff giriş -->
+    <div id="staffLogin">
+      <div class="field"><label data-ky>Кызматкердин аты</label><label data-ru>Имя сотрудника</label><label data-en>Staff name</label><label data-tr>Çalışan adı</label><input id="inpStaff" placeholder="Aigerim"></div>
+      <button class="btn" onclick="loginStaff()" data-ky>Кирүү</button><button class="btn" onclick="loginStaff()" data-ru>Войти</button><button class="btn" onclick="loginStaff()" data-en>Login</button><button class="btn" onclick="loginStaff()" data-tr>Giriş</button>
+    </div>
+
+    <div id="posMain" class="hidden">
+      <!-- Müşteri -->
+      <div class="field"><label data-ky>Телефон же QR код</label><label data-ru>Телефон или QR</label><label data-en>Phone or QR</label><label data-tr>Telefon veya QR</label><input id="q" placeholder="+996... / RIO-XXXX"></div>
+      <div class="row">
+        <button class="btn" onclick="findUser()" data-ky>Табуу</button><button class="btn" onclick="findUser()" data-ru>Найти</button><button class="btn" onclick="findUser()" data-en>Find</button><button class="btn" onclick="findUser()" data-tr>Bul</button>
+        <button class="btn ghost" onclick="clearUser()" data-ky>Мейман</button><button class="btn ghost" onclick="clearUser()" data-ru>Гость</button><button class="btn ghost" onclick="clearUser()" data-en>Guest</button><button class="btn ghost" onclick="clearUser()" data-tr>Misafir</button>
+      </div>
+      <div class="msg" id="findMsg"></div>
+      <div class="user-card hidden" id="userCard"><div id="uName">—</div><div class="pts" id="uPts">0</div><div style="font-size:12px;color:var(--muted)">points / балл</div></div>
+
+      <!-- Kategoriler -->
+      <div class="cats" id="cats"></div>
+      <div id="prods" style="max-height:260px;overflow:auto"></div>
+
+      <!-- Sepet -->
+      <div id="cart" style="margin-top:12px"></div>
+      <div class="total"><span data-ky>Жалпы</span><span data-ru>Итого</span><span data-en>Total</span><span data-tr>Toplam</span><span id="cartTotal">0 сом</span></div>
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn green" onclick="placeOrder()" data-ky>Заказды кабыл алуу</button><button class="btn green" onclick="placeOrder()" data-ru>Принять заказ</button><button class="btn green" onclick="placeOrder()" data-en>Place Order</button><button class="btn green" onclick="placeOrder()" data-tr>Siparişi Al</button>
+      </div>
+      <div class="msg ok" id="okMsg"></div>
+      <div id="receiptBox"></div>
+      <button class="btn ghost hidden" id="newBtn" onclick="newOrder()" data-ky>➕ Жаңы заказ</button><button class="btn ghost hidden" id="newBtn" onclick="newOrder()" data-ru>➕ Новый заказ</button><button class="btn ghost hidden" id="newBtn" onclick="newOrder()" data-en>➕ New order</button><button class="btn ghost hidden" id="newBtn" onclick="newOrder()" data-tr>➕ Yeni sipariş</button>
+
+      <div class="divider"></div>
+      <h3 style="font-size:14px;color:var(--gold2);margin-bottom:8px" data-ky>Бүгүнкү заказдар</h3><h3 style="font-size:14px;color:var(--gold2);margin-bottom:8px" data-ru>Сегодняшние заказы</h3><h3 style="font-size:14px;color:var(--gold2);margin-bottom:8px" data-en>Today's orders</h3><h3 style="font-size:14px;color:var(--gold2);margin-bottom:8px" data-tr>Bugünkü siparişler</h3>
+      <div id="today" style="max-height:200px;overflow:auto"></div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <div style="font-size:12px;color:var(--muted)">RIO Coffee · Karakol · Worker POS · v1</div>
+    <div style="margin-top:8px">
+      <a href="#" onclick="event.preventDefault(); location.href=(window.RIO_BASE||'')+'/'" style="color:var(--gold);font-size:12px;text-decoration:none">← Ana Site</a> · 
+      <a href="#" onclick="event.preventDefault(); location.href=(window.RIO_BASE||'')+'/kasa'" style="color:var(--gold);font-size:12px;text-decoration:none">Kasa</a> · 
+      <a href="#" onclick="event.preventDefault(); location.href=(window.RIO_BASE||'')+'/admin'" style="color:var(--gold);font-size:12px;text-decoration:none">Admin</a>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted)">
+      GitHub Pages: <span id="ghLink"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+const LS_URL='rio_supabase_url', LS_KEY='rio_supabase_key';
+let supabaseClient=null;
+let PRODUCTS=[], CART=[], CUR=null, STAFF={name:''}, CUR_CAT='coffee';
+let LANG='ky';
+
+function setLang(l){
+  LANG=l;
+  document.body.className='lang-'+l;
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('l'+l).classList.add('active');
+  document.querySelectorAll('[data-ky]').forEach(el=>{
+    el.style.display = l==='ky' ? '' : 'none';
+  });
+  document.querySelectorAll('[data-ru]').forEach(el=>el.style.display = l==='ru' ? '' : 'none');
+  document.querySelectorAll('[data-en]').forEach(el=>el.style.display = l==='en' ? '' : 'none');
+  document.querySelectorAll('[data-tr]').forEach(el=>el.style.display = l==='tr' ? '' : 'none');
+  localStorage.setItem('rio_lang', l);
+}
+function t(ky,ru,en,tr){ return LANG==='ky'?ky : LANG==='ru'?ru : LANG==='en'?en : tr; }
+
+function loadConn(){
+  const u=localStorage.getItem(LS_URL)||'';
+  const k=localStorage.getItem(LS_KEY)||'';
+  document.getElementById('sbUrl').value=u;
+  document.getElementById('sbKey').value=k;
+  return {u,k};
+}
+function saveConn(){
+  const u=document.getElementById('sbUrl').value.trim();
+  const k=document.getElementById('sbKey').value.trim();
+  const msg=document.getElementById('connMsg');
+  if(!u || !k){ msg.textContent=t('URL жана key киргизиңиз','Введите URL и key','Enter URL and key','URL ve key girin'); msg.className='msg err'; return; }
+  if(!u.startsWith('https://')){ msg.textContent='URL https:// ile başlamalı'; msg.className='msg err'; return; }
+  localStorage.setItem(LS_URL,u);
+  localStorage.setItem(LS_KEY,k);
+  msg.textContent=t('Сакталды ✓ Текшерилип жатат...','Сохранено ✓ Проверка...','Saved ✓ Checking...','Kaydedildi ✓ Kontrol ediliyor...'); msg.className='msg ok';
+  initSupabase();
+}
+function clearConn(){
+  localStorage.removeItem(LS_URL); localStorage.removeItem(LS_KEY);
+  document.getElementById('sbUrl').value=''; document.getElementById('sbKey').value='';
+  document.getElementById('connMsg').textContent=t('Тазаланды','Очищено','Cleared','Temizlendi'); 
+  document.getElementById('connMsg').className='msg ok';
+  supabaseClient=null;
+  document.getElementById('posCard').classList.add('hidden');
+  document.getElementById('connCard').classList.remove('hidden');
+}
+
+async function initSupabase(){
+  const {u,k}=loadConn();
+  if(!u || !k) return;
+  try{
+    supabaseClient = window.supabase.createClient(u,k);
+    // test
+    const {data, error} = await supabaseClient.from('products').select('id').limit(1);
+    if(error) throw error;
+    document.getElementById('connMsg').textContent=t('Туташуу ийгиликтүү ✓','Подключение успешно ✓','Connected ✓','Bağlandı ✓'); 
+    document.getElementById('connMsg').className='msg ok';
+    document.getElementById('connCard').classList.add('hidden');
+    document.getElementById('posCard').classList.remove('hidden');
+    loadProducts();
+    loadToday();
+  }catch(e){
+    document.getElementById('connMsg').textContent='Hata: '+(e.message||e); 
+    document.getElementById('connMsg').className='msg err';
+    document.getElementById('posCard').classList.add('hidden');
+    document.getElementById('connCard').classList.remove('hidden');
+  }
+}
+
+async function loadProducts(){
+  try{
+    const {data,error}=await supabaseClient.from('products').select('*').order('cat');
+    if(error) throw error;
+    PRODUCTS=data||[];
+    buildCats();
+    renderProds();
+  }catch(e){ console.error(e); }
+}
+function buildCats(){
+  const set=new Set(PRODUCTS.map(p=>p.cat));
+  const order=['coffee','bubble','juice','limonade','milkshake','matcha','kakao','icetea','djuzboll','dessert'];
+  const cats=order.filter(c=>set.has(c));
+  if(!cats.length) return;
+  if(!cats.includes(CUR_CAT)) CUR_CAT=cats[0];
+  document.getElementById('cats').innerHTML=cats.map(c=>`<div class="cat ${c===CUR_CAT?'active':''}" onclick="setCat('${c}')">${c}</div>`).join('');
+}
+function setCat(c){ CUR_CAT=c; document.querySelectorAll('.cat').forEach(el=>el.classList.toggle('active',el.textContent===c)); renderProds(); }
+function renderProds(){
+  const list=PRODUCTS.filter(p=>p.cat===CUR_CAT);
+  document.getElementById('prods').innerHTML=list.map(p=>`<div class="prod" onclick="addCart('${p.id}')"><b>${esc(p.name_ky||p.name_ru)}</b><span>${p.price} сом</span></div>`).join('') || '<div style="color:var(--muted);text-align:center;padding:12px">—</div>';
+}
+function esc(s){ return String(s||'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c])); }
+
+function addCart(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  const it=CART.find(x=>x.id===id);
+  if(it) it.qty++; else CART.push({id:p.id,name:p.name_ky||p.name_ru,price:p.price,qty:1});
+  renderCart();
+}
+function renderCart(){
+  document.getElementById('cart').innerHTML=CART.map((it,i)=>`<div class="cart-item"><b>${esc(it.name)}</b><span class="qty"><button class="btn ghost sm" onclick="chg(${i},-1)">−</button>${it.qty}<button class="btn ghost sm" onclick="chg(${i},1)">+</button> <span style="color:var(--gold)">${it.price*it.qty}</span></span></div>`).join('');
+  document.getElementById('cartTotal').textContent=CART.reduce((s,it)=>s+it.price*it.qty,0)+' сом';
+}
+function chg(i,d){ CART[i].qty+=d; if(CART[i].qty<=0) CART.splice(i,1); renderCart(); }
+
+function loginStaff(){
+  const n=document.getElementById('inpStaff').value.trim();
+  if(n.length<2) return;
+  STAFF={name:n};
+  document.getElementById('staffName').textContent=n;
+  document.getElementById('staffLogin').classList.add('hidden');
+  document.getElementById('posMain').classList.remove('hidden');
+}
+function logoutStaff(){
+  STAFF={name:''};
+  document.getElementById('staffLogin').classList.remove('hidden');
+  document.getElementById('posMain').classList.add('hidden');
+  document.getElementById('inpStaff').value='';
+}
+
+async function findUser(){
+  const q=document.getElementById('q').value.trim();
+  const msg=document.getElementById('findMsg');
+  if(!q){ msg.textContent=t('Телефон же код жазыңыз','Введите телефон или код','Enter phone or code','Telefon veya kod girin'); msg.className='msg err'; return; }
+  try{
+    // phone veya qr ile ara
+    let user=null;
+    // önce qr
+    let {data} = await supabaseClient.from('users').select('*').eq('qr', q).limit(1);
+    if(data && data[0]) user=data[0];
+    else {
+      // phone
+      const clean=q.replace(/\D/g,'');
+      let {data:byPhone} = await supabaseClient.from('users').select('*').ilike('phone','%'+clean+'%').limit(1);
+      if(byPhone && byPhone[0]) user=byPhone[0];
+    }
+    if(!user){ msg.textContent=t('Табылган жок','Не найден','Not found','Bulunamadı'); msg.className='msg err'; document.getElementById('userCard').classList.add('hidden'); CUR=null; return; }
+    CUR=user;
+    document.getElementById('uName').textContent=user.name;
+    document.getElementById('uPts').textContent=user.points||0;
+    document.getElementById('userCard').classList.remove('hidden');
+    msg.textContent='✓ '+user.name; msg.className='msg ok';
+  }catch(e){ msg.textContent='Hata: '+e.message; msg.className='msg err'; }
+}
+function clearUser(){ CUR=null; document.getElementById('userCard').classList.add('hidden'); document.getElementById('q').value=''; document.getElementById('findMsg').textContent=t('Мейман режими ✓','Режим гостя ✓','Guest mode ✓','Misafir modu ✓'); document.getElementById('findMsg').className='msg ok'; }
+
+async function placeOrder(){
+  if(!CART.length){ document.getElementById('okMsg').textContent=t('Себет бош','Корзина пуста','Cart empty','Sepet boş'); return; }
+  try{
+    const total=CART.reduce((s,it)=>s+it.price*it.qty,0);
+    const itemCount=CART.reduce((s,it)=>s+it.qty,0);
+    const perItem=10; // default bonus
+    let earned=0;
+    if(CUR) earned=itemCount*perItem;
+
+    // orders tablosuna ekle (varsa)
+    const orderId='o'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    const order={
+      id: orderId,
+      userId: CUR?CUR.id:'',
+      userName: CUR?CUR.name:'',
+      staffName: STAFF.name||'',
+      items: CART,
+      total,
+      earnedPoints: earned,
+      itemCount,
+      at: new Date().toISOString()
+    };
+    // orders tablosu varsa yaz, yoksa hata görmezden gel
+    try{ await supabaseClient.from('orders').insert({id:orderId, data:order}); }catch(e){ console.log('orders insert skip', e.message); try{ await supabaseClient.from('orders').insert(order); }catch(e2){} }
+
+    // kullanıcı puanı güncelle
+    if(CUR){
+      const newPts=(CUR.points||0)+earned;
+      await supabaseClient.from('users').update({points:newPts, qr: 'RIO-'+Math.random().toString(36).slice(2,10).toUpperCase()}).eq('id',CUR.id);
+      CUR.points=newPts;
+      document.getElementById('uPts').textContent=newPts;
+    }
+
+    showReceipt(order);
+    document.getElementById('okMsg').textContent=t('Заказ кабыл алынды ✓','Заказ принят ✓','Order placed ✓','Sipariş alındı ✓');
+    document.getElementById('newBtn').classList.remove('hidden');
+    CART=[]; renderCart();
+    loadToday();
+  }catch(e){ document.getElementById('okMsg').textContent='Hata: '+e.message; }
+}
+function showReceipt(o){
+  const dt=new Date(o.at).toLocaleString();
+  const rows=o.items.map(it=>`<div class="r-row"><span>${esc(it.name)} x${it.qty}</span><span>${it.price*it.qty}</span></div>`).join('');
+  document.getElementById('receiptBox').innerHTML=`<div class="receipt"><div class="r-h">RIO Coffee</div><div class="r-c">Жусаева 127, Каракол</div><div class="r-sep"></div><div class="r-row"><span>${dt}</span><span>#${o.id.slice(-6)}</span></div><div class="r-row"><span>${esc(STAFF.name)}</span><span>${esc(CUR?CUR.name:t('Мейман','Гость','Guest','Misafir'))}</span></div><div class="r-sep"></div>${rows}<div class="r-sep"></div><div class="r-row r-total"><span>TOTAL</span><span>${o.total} сом</span></div>${o.earnedPoints?`<div class="r-row" style="color:green">+ ${o.earnedPoints} points</div>`:''}<div class="r-sep"></div><div class="r-c">Спасибо! ☕</div></div>`;
+}
+function newOrder(){ CART=[]; renderCart(); document.getElementById('receiptBox').innerHTML=''; document.getElementById('okMsg').textContent=''; document.getElementById('newBtn').classList.add('hidden'); clearUser(); }
+
+async function loadToday(){
+  try{
+    const {data,error}=await supabaseClient.from('orders').select('*').order('id',{ascending:false}).limit(30);
+    if(error) throw error;
+    const today=new Date().toISOString().slice(0,10);
+    const todays=(data||[]).map(r=>r.data||r).filter(o=>String(o.at||'').slice(0,10)===today);
+    document.getElementById('today').innerHTML=todays.length? todays.map(o=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(200,164,93,.15);font-size:13px"><span>#${(o.id||'').slice(-6)} ${esc(o.staffName||'')} ${esc(o.userName||'')}</span><span style="color:var(--gold)">${o.total||0} сом</span></div>`).join('') : '<div style="color:var(--muted);text-align:center;padding:8px">—</div>';
+  }catch(e){ document.getElementById('today').innerHTML='<div style="color:var(--muted);text-align:center">orders tablosu yok veya boş</div>'; }
+}
+
+// init
+(function(){
+  const savedLang=localStorage.getItem('rio_lang')||'ky';
+  setLang(savedLang);
+  loadConn();
+  // eğer url'de ?lang= varsa
+  const params=new URLSearchParams(location.search);
+  const pl=params.get('lang');
+  if(pl && ['ky','ru','en','tr'].includes(pl)) setLang(pl);
+  initSupabase();
+  // GitHub Pages link göster
+  const base = location.origin + (window.RIO_BASE||'');
+  const el=document.getElementById('ghLink');
+  if(el){
+    const path = location.pathname;
+    let ghPath = path;
+    if(path.includes('/riocofe1/')) ghPath = path;
+    else {
+      // localde ise github linkini göster
+      ghPath = '/riocofe1'+path;
+    }
+    el.innerHTML = '<a href="https://jokererer123-web.github.io/riocofe1/ky/worker/" style="color:var(--gold)">jokererer123-web.github.io/riocofe1/ky/worker/</a>';
+  }
+})();
+</script>
+</body>
+</html>
